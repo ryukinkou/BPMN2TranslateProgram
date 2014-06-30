@@ -270,20 +270,54 @@
 
 	</xsl:function>
 
-	<xsl:function name="fcn:findNameThroughType">
+	<xsl:function name="fcn:findNameThroughElement">
 		<xsl:param name="type" />
-		<xsl:sequence select="$fcnLocalElements[@type = $type and @name][1]/@name" />
+		<xsl:choose>
+			<xsl:when test="count($fcnLocalElements[@type = $type and @name]) = 1">
+				<xsl:sequence select="$fcnLocalElements[@type = $type and @name]/@name" />
+			</xsl:when>
+			<xsl:when test="count($fcnLocalElements[@type = $type and @name]) > 1">
+				<xsl:sequence select="$fcnLocalElements[@type = $type and @name][1]/@name" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:sequence select="$type" />
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:function>
 
 	<xsl:function name="fcn:findNameThroughAttribute">
 		<xsl:param name="type" />
 		<xsl:choose>
-			<xsl:when test="$fcnLocalAttributes[@type = $type and @name][1]/@name">
+			<xsl:when test="count($fcnLocalAttributes[@type = $type and @name]) = 1">
+				<xsl:sequence select="$fcnLocalAttributes[@type = $type and @name]/@name" />
+			</xsl:when>
+			<xsl:when test="count($fcnLocalAttributes[@type = $type and @name]) > 1">
 				<xsl:sequence
 					select="$fcnLocalAttributes[@type = $type and @name][1]/@name" />
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:sequence select="$type" />
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:function>
+
+	<xsl:function name="fcn:nameCleaner">
+		<xsl:param name="name" />
+		<xsl:choose>
+			<xsl:when test="fcn:isXsdURI($name)">
+
+				<xsl:choose>
+					<xsl:when
+						test="$name = 'xsd:QName' or $name = 'xsd:IDREF' or $name = 'xsd:ID'">
+						<xsl:sequence select="'xsd:string'" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:sequence select="$name" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$name" />
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:function>

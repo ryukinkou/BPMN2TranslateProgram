@@ -164,40 +164,215 @@
 
 		<xsl:for-each select="$localComplexTypes[@name]">
 
-			<xsl:message><xsl:value-of select="fcn:findNameThroughType(./@name)" /></xsl:message>
-			
-			<xsl:for-each select="descendant::*[name()='xsd:element']">
-				<xsl:message> ele : <xsl:value-of select="./@name" /></xsl:message>
-			</xsl:for-each>
-			
-			<xsl:for-each select="descendant::*[name()='xsd:attribute']">
-				<xsl:message> att : <xsl:value-of select="./@name" /></xsl:message>
-			</xsl:for-each>
+			<xsl:call-template name="predicateTranslationTemplate">
+				<xsl:with-param name="properties"
+					select="descendant::*[name()='xsd:element']" />
+				<xsl:with-param name="isElement" select="true()" />
+			</xsl:call-template>
+
+			<xsl:call-template name="predicateTranslationTemplate">
+				<xsl:with-param name="properties"
+					select="descendant::*[name()='xsd:attribute']" />
+				<xsl:with-param name="isElement" select="false()" />
+			</xsl:call-template>
+
+			<!-- class definition -->
+			<owl:Class rdf:about="{fcn:getFullName(fcn:findNameThroughElement(./@name))}">
+
+				<!-- superclass definition -->
+				<xsl:if
+					test="fcn:findNameThroughElement(descendant::*[name()='xsd:extension']/@base)">
+					<rdfs:subClassOf
+						rdf:resource="{fcn:getFullName(fcn:findNameThroughElement(descendant::*[name()='xsd:extension']/@base))}" />
+				</xsl:if>
+
+				<xsl:call-template name="propertyTranslationTemplate">
+					<xsl:with-param name="properties"
+						select="descendant::*[name()='xsd:element']" />
+					<xsl:with-param name="isElement" select="true()" />
+				</xsl:call-template>
+
+				<xsl:call-template name="propertyTranslationTemplate">
+					<xsl:with-param name="properties"
+						select="descendant::*[name()='xsd:attribute']" />
+					<xsl:with-param name="isElement" select="false()" />
+				</xsl:call-template>
+
+			</owl:Class>
+
+		</xsl:for-each>
+
+	</xsl:template>
+
+	<xsl:template name="predicateTranslationTemplate">
+		<xsl:param name="properties" />
+		<xsl:param name="isElement" required="no" select="true()" />
+
+		<xsl:for-each select="$properties">
+			<!-- name : name | type，type : ref | ref -->
+			<xsl:variable name="name">
+				<xsl:choose>
+					<xsl:when test="$isElement = true()">
+						<xsl:value-of select="./@name | ./@ref" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="./@name" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+
+			<xsl:variable name="type">
+				<xsl:choose>
+					<xsl:when test="$isElement = true()">
+						<xsl:value-of select="./@type | ./@ref" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="./@type" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+
+			<xsl:choose>
+				<xsl:when test="fcn:isXsdURI($type)">
+					<owl:DatatypeProperty rdf:about="{fcn:getFullName($name)}" />
+				</xsl:when>
+				<xsl:otherwise>
+					<owl:ObjectProperty rdf:about="{fcn:getFullName(fcn:getPredicate($name))}" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
+
+	</xsl:template>
+
+	<xsl:template name="propertyTranslationTemplate">
+		<xsl:param name="properties" />
+		<xsl:param name="isElement" required="no" select="true()" />
+
+		<xsl:for-each select="$properties">
+
+			<!-- name : name | type，type : ref | ref -->
+			<xsl:variable name="name">
+				<xsl:choose>
+					<xsl:when test="$isElement = true()">
+						<xsl:value-of select="./@name | ./@ref" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="./@name" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+
+			<xsl:variable name="type">
+				<xsl:choose>
+					<xsl:when test="$isElement = true()">
+						<xsl:value-of select="./@type | ./@ref" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="./@type" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+
+			<xsl:variable name="objectType">
+				<xsl:choose>
+					<xsl:when test="$isElement = true()">
+						<xsl:value-of select="fcn:findNameThroughElement(fcn:nameCleaner($type))" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of
+							select="fcn:findNameThroughAttribute(fcn:nameCleaner($type))" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+
+			<xsl:variable name="minOccurs">
+				<xsl:value-of select="fcn:getMinOccurs(@minOccurs,@use,@nillable)" />
+			</xsl:variable>
+
+			<xsl:variable name="maxOccurs">
+				<xsl:value-of select="fcn:getMaxOccurs(@maxOccurs)" />
+			</xsl:variable>
+
+			<xsl:choose>
+				<xsl:when test="fcn:isXsdURI($type)">
+					<rdfs:subClassOf>
+						<owl:Restriction>
+							<owl:onProperty rdf:resource="{fcn:getFullName($name)}" />
+							<xsl:call-template name="cardinalityTemplate">
+								<xsl:with-param name="type" select="fcn:nameCleaner($type)" />
+								<xsl:with-param name="isDatatypeProperty" select="true()" />
+								<xsl:with-param name="minOccurs" select="$minOccurs" />
+								<xsl:with-param name="maxOccurs" select="$maxOccurs" />
+							</xsl:call-template>
+						</owl:Restriction>
+					</rdfs:subClassOf>
+				</xsl:when>
+
+				<xsl:otherwise>
+					<rdfs:subClassOf>
+						<owl:Restriction>
+							<owl:onProperty rdf:resource="{fcn:getFullName(fcn:getPredicate($name))}" />
+							<xsl:call-template name="cardinalityTemplate">
+								<xsl:with-param name="type" select="$objectType" />
+								<xsl:with-param name="isDatatypeProperty" select="false()" />
+								<xsl:with-param name="minOccurs" select="$minOccurs" />
+								<xsl:with-param name="maxOccurs" select="$maxOccurs" />
+							</xsl:call-template>
+						</owl:Restriction>
+					</rdfs:subClassOf>
+				</xsl:otherwise>
+			</xsl:choose>
 
 		</xsl:for-each>
 
 	</xsl:template>
 
 	<xsl:template name="simpleTypeTranslationTemplate">
-
 		<xsl:for-each select="$localSimpleTypes[@name]">
-
 			<xsl:variable name="currentName" select="@name" />
-
 			<owl:Class
 				rdf:about="{fcn:getFullName(fcn:findNameThroughAttribute($currentName))}" />
-
 			<xsl:for-each select="descendant::*[name()='xsd:enumeration']">
-
 				<owl:NamedIndividual
 					rdf:about="{fcn:getFullName(fcn:findNameThroughAttribute((replace(./@value,'#',''))))}">
 					<rdf:type
 						rdf:resource="{fcn:getFullName(fcn:findNameThroughAttribute($currentName))}" />
 				</owl:NamedIndividual>
-
 			</xsl:for-each>
 		</xsl:for-each>
 
+	</xsl:template>
+
+	<xsl:template name="cardinalityTemplate">
+		<xsl:param name="type" />
+		<xsl:param name="isDatatypeProperty" />
+		<xsl:param name="minOccurs" />
+		<xsl:param name="maxOccurs" />
+		<xsl:choose>
+			<xsl:when test="$minOccurs = 0 and $maxOccurs = 'unbounded'">
+				<owl:allValuesFrom rdf:resource="{fcn:getFullName($type)}" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:if test="$isDatatypeProperty = true()">
+					<owl:onDataRange rdf:resource="{fcn:getFullName($type)}" />
+				</xsl:if>
+				<xsl:if test="$isDatatypeProperty = false()">
+					<owl:onClass rdf:resource="{fcn:getFullName($type)}" />
+				</xsl:if>
+				<xsl:if test="not($minOccurs = 0)">
+					<owl:minQualifiedCardinality
+						rdf:datatype="&amp;xsd;nonNegativeInteger">
+						<xsl:value-of select="$minOccurs" />
+					</owl:minQualifiedCardinality>
+				</xsl:if>
+				<xsl:if test="not($maxOccurs = 'unbounded')">
+					<owl:maxQualifiedCardinality
+						rdf:datatype="&amp;xsd;nonNegativeInteger">
+						<xsl:value-of select="$maxOccurs" />
+					</owl:maxQualifiedCardinality>
+				</xsl:if>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 </xsl:stylesheet>
