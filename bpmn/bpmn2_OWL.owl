@@ -211,7 +211,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasCompletionCondition"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>
@@ -238,7 +238,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasFrom"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
             <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
@@ -246,7 +246,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasTo"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
             <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
@@ -675,7 +675,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasCondition"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#condition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#formalExpression"/>
             <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
@@ -683,7 +683,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasEvent"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#event"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#implicitThrowEvent"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>
@@ -695,7 +695,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasActivationCondition"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>
@@ -712,7 +712,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasCondition"/>
-            <owl:allValuesFrom rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:allValuesFrom rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
          </owl:Restriction>
       </rdfs:subClassOf>
    </owl:Class>
@@ -844,7 +844,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasDataPath"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#condition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#formalExpression"/>
             <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
@@ -864,7 +864,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasMessagePath"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#condition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#formalExpression"/>
             <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
@@ -918,7 +918,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasTransformation"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#condition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#formalExpression"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>
@@ -1253,7 +1253,7 @@
          </owl:Restriction>
       </rdfs:subClassOf>
    </owl:Class>
-   <owl:Class rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition">
+   <owl:Class rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#expression">
       <rdfs:subClassOf rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#baseElementWithMixedContent"/>
    </owl:Class>
    <owl:ObjectProperty rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#hasDocumentation"/>
@@ -1332,8 +1332,8 @@
    </owl:Class>
    <owl:DatatypeProperty rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#language"/>
    <owl:DatatypeProperty rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#evaluatesToTypeRef"/>
-   <owl:Class rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#condition">
-      <rdfs:subClassOf rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+   <owl:Class rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#formalExpression">
+      <rdfs:subClassOf rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#language"/>
@@ -1441,7 +1441,7 @@
    <owl:Class rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#humanPerformer">
       <rdfs:subClassOf rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#performer"/>
    </owl:Class>
-   <owl:Class rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#event">
+   <owl:Class rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#implicitThrowEvent">
       <rdfs:subClassOf rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#throwEvent"/>
    </owl:Class>
    <owl:DatatypeProperty rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#default"/>
@@ -1631,7 +1631,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasChildLaneSet"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#childLaneSet"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#laneSet"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>
@@ -1650,7 +1650,7 @@
    </owl:Class>
    <owl:ObjectProperty rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#hasLane"/>
    <owl:DatatypeProperty rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#name"/>
-   <owl:Class rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#childLaneSet">
+   <owl:Class rdf:about="http://www.omg.org/spec/BPMN/20100524/MODEL#laneSet">
       <rdfs:subClassOf rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#baseElement"/>
       <rdfs:subClassOf>
          <owl:Restriction>
@@ -1803,7 +1803,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasLoopCardinality"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>
@@ -1844,7 +1844,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasCompletionCondition"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>
@@ -2423,7 +2423,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasConditionExpression"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>
@@ -2500,7 +2500,7 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasLoopCondition"/>
-            <owl:allValuesFrom rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:allValuesFrom rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
          </owl:Restriction>
       </rdfs:subClassOf>
       <rdfs:subClassOf>
@@ -2656,21 +2656,21 @@
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasTimeDate"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasTimeDuration"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>
       <rdfs:subClassOf>
          <owl:Restriction>
             <owl:onProperty rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#hasTimeCycle"/>
-            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#completionCondition"/>
+            <owl:onClass rdf:resource="http://www.omg.org/spec/BPMN/20100524/MODEL#expression"/>
             <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality>
          </owl:Restriction>
       </rdfs:subClassOf>

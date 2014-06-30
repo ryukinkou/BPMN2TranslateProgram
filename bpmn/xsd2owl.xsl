@@ -49,6 +49,9 @@
 
 	<!-- 本地定义的Elements -->
 	<xsl:variable name="localElements" select="//xsd:element" />
+	
+	<!-- 本地定义的切位于根部的Elements -->
+	<xsl:variable name="localRootElements" select="/xsd:schema/xsd:element" />
 
 	<!-- 本地定义的attributes -->
 	<xsl:variable name="localAttributes" select="//xsd:attribute" />
@@ -176,6 +179,8 @@
 				<xsl:with-param name="isElement" select="false()" />
 			</xsl:call-template>
 
+			<xsl:message select="fcn:getFullName(fcn:findNameThroughElement(./@name))" />
+	
 			<!-- class definition -->
 			<owl:Class rdf:about="{fcn:getFullName(fcn:findNameThroughElement(./@name))}">
 

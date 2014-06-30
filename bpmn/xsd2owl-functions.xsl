@@ -18,6 +18,7 @@
 	<xsl:variable name="fcnLocalComplexTypes" select="$localComplexTypes" />
 	<xsl:variable name="fcnLocalElements" select="$localElements" />
 	<xsl:variable name="fcnLocalAttributes" select="$localAttributes" />
+	<xsl:variable name="fcnLocalRootElements" select="$localRootElements" />
 
 	<!-- 获取input的QName -->
 	<xsl:function name="fcn:getQName" as="xsd:string">
@@ -273,6 +274,10 @@
 	<xsl:function name="fcn:findNameThroughElement">
 		<xsl:param name="type" />
 		<xsl:choose>
+			<!-- element at root is priority selection -->
+			<xsl:when test="count($fcnLocalRootElements[@type = $type and @name]) = 1">
+				<xsl:sequence select="$fcnLocalRootElements[@type = $type and @name]/@name" />
+			</xsl:when>
 			<xsl:when test="count($fcnLocalElements[@type = $type and @name]) = 1">
 				<xsl:sequence select="$fcnLocalElements[@type = $type and @name]/@name" />
 			</xsl:when>
